@@ -1,6 +1,5 @@
 INDEX VERSION 1.129+C:\Users\Fins\Desktop\Estágio\Teste1\.metadata\.plugins\org.eclipse.jdt.core
 486699731.index
-3305289252.index
 3119455041.index
 2017505986.index
 2312443017.index
@@ -19,6 +18,4 @@ INDEX VERSION 1.129+C:\Users\Fins\Desktop\Estágio\Teste1\.metadata\.plugins\org.
 1847969816.index
 2927524569.index
 1904741536.index
-3927496509.index
-2154558690.index
 2167310551.index
