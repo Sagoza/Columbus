@@ -1,0 +1,33 @@
+package please;
+
+import java.sql.*;
+
+public class Driver {
+
+	public static void main(String[] args) {
+		String CIP;
+		System.out.println("Enter a CI");
+		CIP =  System.in.read();
+		try {
+			Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/transactions", "root", "");
+
+			Statement myStat = myConn.createStatement();
+
+			ResultSet myRs = myStat.executeQuery("select * from temployed");
+
+			while (myRs.next()) {
+				if ((myRs.getString("CI")).equals(CIP)) {
+					//System.out.println(myRs.getInt("Entering Hour"));
+					//System.out.println(myRs.getInt("Exit Hour"));
+					
+					System.out.println(myRs.getString("LastName")); 
+				}
+			}
+
+		} catch (Exception exc) {
+			exc.printStackTrace();
+
+		}
+	}
+
+}

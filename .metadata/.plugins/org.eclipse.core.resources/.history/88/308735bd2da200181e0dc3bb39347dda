@@ -1,0 +1,40 @@
+package please;
+
+import java.awt.event.KeyListener;
+import java.io.InputStream;
+import java.sql.*;
+import java.util.Scanner;
+
+public class Driver {
+
+	public static void main(String[] args) {
+		Scanner scanner = new Scanner(System.in);
+		System.out.print("Enter your CI ");
+		String CIP = scanner.nextLine();
+		int i = 0;
+		try {
+			Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/transactions", "root", "");
+
+			Statement myStat = myConn.createStatement();
+
+			ResultSet myRs = myStat.executeQuery("select * from temployed");
+
+			while (myRs.next()) {
+				if ((myRs.getString("CI")).equals(CIP)) {
+					double enterhour = myRs.getDouble("EnteringHour"); 
+					double exithour = myRs.getDouble("ExitHour");
+					double workingtime = exithour - enterhour;
+					System.out.println(myRs.getString("LastName ") + "has worked " + workingtime + "Hours" );
+					i++;
+				}
+			}
+			if (i == 0)
+				System.out.println("That CI is not in the DATABASE");
+
+		} catch (Exception exc) {
+			exc.printStackTrace();
+
+		}
+	}
+
+}
