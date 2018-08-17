@@ -14,6 +14,9 @@ public class Driver {
 		System.out.print("Enter your CI ");
 		String CIP = scanner.nextLine();
 		int i = 0;
+		
+		// ADDED COOL LCOMMENT TO TEST GIT
+		
 		try {
 			Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/transactions", "root", "");
 
