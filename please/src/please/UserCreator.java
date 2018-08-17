@@ -11,8 +11,19 @@ public class UserCreator {
 
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
-		System.out.print("Enter new UserName:");
-		String Username = scanner.nextLine();
+		System.out.print("Enter users First and Last name:");
+		String FirstAndLast = scanner.nextLine();
+		
+	// FSFASFKASF
+		
+		for (int i = 0; i < 3; i++) {
+			
+			
+		}
+		
+		String FirstName;
+		String LastName;
+		
 		System.out.print("Enter password:");
 		String Password = scanner.nextLine();
 		
@@ -50,4 +61,5 @@ public class UserCreator {
 
 		}
 	}
+	
 }
