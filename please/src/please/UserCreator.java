@@ -1,60 +1,36 @@
 package please;
-
-import java.awt.event.KeyListener;
-import java.io.InputStream;
 import java.sql.*;
 import java.util.Scanner;
 
 public class UserCreator {
+	static String dbc = "jdbc:mysql://localhost:3306/transactions";
+	static String dbc_user = "root";
+	static String dbc_password = "";
+	
 	static Timestamp date;
 	static java.text.SimpleDateFormat formatdate = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	static Scanner scanner = new Scanner(System.in);
+	static String CreateUserQuery = "INSERT INTO temployed VALUES (default,'%s','%s','%s','%s','%s',default,default)";
 
 	public static void main(String[] args) {
-		Scanner scanner = new Scanner(System.in);
-		System.out.print("Enter users First and Last name:");
-		String FirstAndLast = scanner.nextLine();
-		
-	// FSFASFKASF
-		
-		for (int i = 0; i < 3; i++) {
-			
-			
-		}
-		
-		String FirstName;
-		String LastName;
-		
-		System.out.print("Enter password:");
-		String Password = scanner.nextLine();
-		
-		
-		int i = 0;
-		
-		// ADDED COOL LCOMMENT TO TEST GIT
+		String[] Name = userInput("Enter new user First and Last name: ").split(" ");
+		String Password = userInput("Enter new user Password: ");
+		String Rank = userInput("Enter new user Rank: ");
+		String CI = userInput("Enter new user CI: ");
 		
 		try {
-			Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/transactions", "root", "");
+			Connection myConn = DriverManager.getConnection(dbc, dbc_user, dbc_password);
 
 			Statement myStat = myConn.createStatement();
 
-			ResultSet myRs = myStat.executeQuery("select * from temployed");
-
-			while (myRs.next()) {
-				if ((myRs.getString("CI")).equals(CIP)) {
-					
-					date = myRs.getTimestamp("Date");
-					
-					System.out.println();
-					double enterhour = myRs.getDouble("EnteringHour");
-					double exithour = myRs.getDouble("ExitHour");
-					double workingtime = exithour - enterhour;
-					System.out.println(myRs.getString("LastName") + " works " + workingtime + "Hours");
-					i++;
-				}
-			
+			if (myStat.executeUpdate(String.format(CreateUserQuery, Rank, Name[0], Name[1], Password, CI)) == 1) {
+				println("Successfuly Created User '" + Name[0] +  " " + Name[1] + "' (" + CI + ")");
 			}
-			if (i == 0)
-				System.out.println("That CI is not in the DATABASE");
+			else
+			{
+				println("Failed Query (check 'UserCreator.java')");
+				// Debug failsafe?
+			}
 
 		} catch (Exception exc) {
 			exc.printStackTrace();
@@ -62,4 +38,11 @@ public class UserCreator {
 		}
 	}
 	
+	public static String userInput(String statement) {
+		System.out.println(statement);
+		return scanner.nextLine();
+	}
+	public static void println(String line) {
+		System.out.println(line);
+	}
 }
