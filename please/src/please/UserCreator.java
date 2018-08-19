@@ -6,9 +6,7 @@ public class UserCreator {
 	static String dbc = "jdbc:mysql://localhost:3306/transactions";
 	static String dbc_user = "root";
 	static String dbc_password = "";
-	
-	static Timestamp date;
-	static java.text.SimpleDateFormat formatdate = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
 	static Scanner scanner = new Scanner(System.in);
 	static String CreateUserQuery = "INSERT INTO temployed VALUES (default,'%s','%s','%s','%s','%s',default,default)";
 
@@ -29,12 +27,10 @@ public class UserCreator {
 			else
 			{
 				println("Failed Query (check 'UserCreator.java')");
-				// Debug failsafe?
 			}
 
 		} catch (Exception exc) {
 			exc.printStackTrace();
-
 		}
 	}
 	
