@@ -12,7 +12,6 @@ public class UserCreator {
 
 	public static void main(String[] args) {
 		String[] Name = userInput("Enter new user First and Last name: ").split(" ");
-		String Username = userInput("Enter your username");
 		String Password = userInput("Enter new user Password: ");
 		String Rank = userInput("Enter new user Rank: ");
 		String CI = userInput("Enter new user CI: ");
@@ -22,8 +21,8 @@ public class UserCreator {
 
 			Statement myStat = myConn.createStatement();
 
-			if (myStat.executeUpdate(String.format(CreateUserQuery, Rank, Name[0], Name[1], Username, Password, CI)) == 1) {
-				println("Successfuly Created User '" + Username + "' (" + CI + ")");
+			if (myStat.executeUpdate(String.format(CreateUserQuery, Rank, Name[0], Name[1], Password, CI)) == 1) {
+				println("Successfuly Created User '" + Name[0] +  " " + Name[1] + "' (" + CI + ")");
 			}
 			else
 			{
