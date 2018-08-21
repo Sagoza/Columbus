@@ -1,0 +1,15 @@
+package please;
+
+import java.util.Scanner;
+
+public class UserLogin {
+	static String dbc = "jdbc:mysql://localhost:3306/transactions";
+	static String dbc_user = "root";
+	static String dbc_password = "";
+	
+	static Scanner scanner = new Scanner(System.in);
+	public static void main(String[] args) {
+		
+	}
+
+}

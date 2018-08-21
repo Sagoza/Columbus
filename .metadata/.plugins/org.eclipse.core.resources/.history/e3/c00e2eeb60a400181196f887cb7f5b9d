@@ -1,0 +1,24 @@
+package please;
+
+public class Main {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		// UserCreator.main(args);
+		String choose = "";
+        switch(choose)
+        {
+            case "LogIN":
+                System.out.println("one");
+                break;
+            case "Register":
+                System.out.println("two");
+                break;
+            default:
+                System.out.println("Please choose LogIN or Register");
+        }
+    }
+	}
+
+

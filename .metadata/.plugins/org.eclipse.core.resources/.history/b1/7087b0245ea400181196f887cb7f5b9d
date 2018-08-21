@@ -1,0 +1,68 @@
+package please;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Scanner;
+
+public class UserLogin {
+	static String dbc = "jdbc:mysql://localhost:3306/transactions";
+	static String dbc_user = "root";
+	static String dbc_password = "";
+	static String office = new String();
+	static Scanner scanner = new Scanner(System.in);
+
+	public static void main(String[] args) {
+		String ID = userInput("Enter your BadgeID: ");
+		// String Password1 = userInput("Enter your Password: ");
+
+		try {
+			Connection myConn = DriverManager.getConnection(dbc, dbc_user, dbc_password);
+
+			Statement myStat = myConn.createStatement();
+
+			ResultSet myRs = myStat.executeQuery("select * from test");
+			while (myRs.next()) {
+				if ((myRs.getString("BadgeID")).equals(ID)) {
+					// if ((myRs.getString("Password")).equals(Password1)) {
+					println("Succefully Logged In");
+					println("Your name is " + myRs.getString("Name") + " " + myRs.getString("LastName"));
+					office = myRs.getString("Office");
+					println("Your working office is: " + office);
+					while (myRs.next()) {
+						if (myRs.getString("Office").equals(office)) {
+							println(myRs.getString("Name" + "LastName"));
+
+						}
+						println("UP");
+					}
+				}
+				
+			}
+		
+				println("Your badge not Found");
+			
+			while (myRs.next()) {
+				if (myRs.getString("Office").equals(office)) {
+					println(myRs.getString("Name" + "LastName"));
+
+				}
+				println("UP");
+			}
+
+		} catch (Exception exc) {
+			exc.printStackTrace();
+		}
+
+	}
+
+	public static String userInput(String statement) {
+		System.out.println(statement);
+		return scanner.nextLine();
+	}
+
+	public static void println(String line) {
+		System.out.println(line);
+	}
+}
