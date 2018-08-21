@@ -1,0 +1,136 @@
+package please;
+
+import java.sql.*;
+import java.util.Scanner;
+
+import com.mysql.jdbc.UpdatableResultSet;
+
+public class UserCreator {
+	static String dbc = "jdbc:mysql://localhost:3306/transactions";
+	static String dbc_user = "root";
+	static String dbc_password = "";
+
+	static Scanner scanner = new Scanner(System.in);
+	static String CreateUserQuery = "INSERT INTO test VALUES (default,'%s', '%s','%s','%s','%s')";
+	static String DeleteUserQuery = "DELETE FROM temployed WHERE  CI='%s';";
+	static String SelectAll = "SELECT * from test";
+
+	public static Boolean ExistsInDB(String DataBaseField, String Field) {
+		try {
+			Connection myConn = DriverManager.getConnection(dbc, dbc_user, dbc_password);
+			Statement myStat = myConn.createStatement();
+			ResultSet myRs = myStat.executeQuery(SelectAll);
+			
+			while (myRs.next()) {
+				if ((myRs.getString(DataBaseField).equals(Field))) {
+					return true;
+				}
+			}
+
+		} catch (Exception exc) {
+			exc.printStackTrace();
+		}
+		return false;
+	}
+	
+	public static void main(String[] args) {
+//		Selector();
+		
+		try {
+			Connection myConn = DriverManager.getConnection(dbc, dbc_user, dbc_password);
+			Statement myStat = myConn.createStatement();
+			ResultSet myRs = myStat.executeQuery(SelectAll);
+
+			while (myRs.next()) {
+				String ID = userInput("Enter new user Badge ID: ");
+				
+				if (ExistsInDB("BadgeID", ID)) {
+					println("Badge ID already exists! Please try a new Badge ID instead");
+					CreateUser();
+				}
+				else
+				{
+					String[] Name = userInput("Enter new user First and Last name: ").split(" ");
+					String Password = userInput("Enter new user Password: ");
+					String Office = userInput("Enter your Office ID: ");
+					
+					if (Name.length > 1)
+					{
+						//INSERT INTO test VALUES (default,'BadgeID', 'Office','FirstName','LastName','%s')
+						if (myStat.executeUpdate(String.format(CreateUserQuery, ID, Office, Name[0], Name[Name.length-1], Password)) == 1) {
+							println("Successfuly Created User '" + Name[0] +  " " + Name[Name.length-1] + "' (" + ID + ")");
+							Selector();
+						}
+					}
+					else
+					{
+						if (myStat.executeUpdate(String.format(CreateUserQuery, ID, Office, Name[0], " ", Password)) == 1) {
+							println("Successfuly Created User '" + Name[0] + "' (" + ID + ")");
+							Selector();
+						}
+					}
+					println("Failed to create new user! Please retry");
+					CreateUser();
+				}
+			}
+		} catch (Exception exc) {
+			exc.printStackTrace();
+		}
+	}
+	
+	public static void Selector() {
+		String var = userInput("Do you wish to 'create' or 'delete' user?");
+		
+		if (var.contains("create"))
+		{
+			CreateUser();
+		}
+		else if (var.contains("delete"))
+		{
+			DeleteUser();
+		}
+		else
+		{
+			Selector();
+		}
+	}
+	
+	public static void DeleteUser() {
+		String CI = userInput("Enter existing user CI: ");
+		
+		try {
+			Connection myConn = DriverManager.getConnection(dbc, dbc_user, dbc_password);
+
+			Statement myStat = myConn.createStatement();
+			
+			if (myStat.executeUpdate(String.format(DeleteUserQuery, CI)) == 1) {
+				println("Successfuly Deleted User with CI " + "(" + CI + ")");
+				Selector();
+			}
+			else
+			{
+				println(String.format("Couldnt find user with CI(%s)",CI));
+				DeleteUser();
+			}
+
+		} catch (Exception exc) {
+			exc.printStackTrace();
+		}
+	}
+
+	public static void CreateUser() {
+		
+	}
+	
+	public void update(String BadgeID, String Username) {
+		String sql = "UPDATE test SET Username = ? , " + " BadgeID = ? ";
+
+	}
+	public static String userInput(String statement) {
+		System.out.println(statement);
+		return scanner.nextLine();
+	}
+	public static void println(String line) {
+		System.out.println(line);
+	}
+}
